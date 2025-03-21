@@ -1,0 +1,6 @@
+@Mission11_Cloud_HostAddress = http://localhost:5293
+
+GET {{Mission11_Cloud_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
