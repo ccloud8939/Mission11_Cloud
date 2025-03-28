@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Book } from "./Book";
 
 
-function BookstList() {
+function BookstList({selectedCategories}: {selectedCategories: string[] }) {
     const [books, setBooks] = useState<Book[]>([]);
     const [pageSize, setPageSize] = useState<number>(10);
     const [pageNum, setPageNum] = useState<number>(1);
@@ -13,8 +13,11 @@ function BookstList() {
     // useEffect only grabs the data when it is needed instead of constantly going back and grabbing it 
     useEffect(() => {
         const fetchBooks = async () => {
+            const categoryParams = selectedCategories
+            .map((cat: string | number | boolean) => `projectTypes=${encodeURIComponent(cat)}`)
+            .join('&');
             // this is where it is getting the data from
-            const response = await fetch(`http://localhost:4000/api/Books/AllBooks?pageHowMany=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}`);
+            const response = await fetch(`http://localhost:4000/api/Books/AllBooks?pageHowMany=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : '' }`);
             //this variable holds the data
             const data = await response.json();
             //sets the project with the updated data
@@ -24,7 +27,7 @@ function BookstList() {
         };
 
         fetchBooks();
-    }, [pageSize, pageNum, totalItems, sortOrder]);
+    }, [pageSize, pageNum, totalItems, sortOrder, selectedCategories]);
     return (
         <>
             <h1>Books List</h1>
