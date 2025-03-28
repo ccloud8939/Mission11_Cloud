@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Book } from "./Book";
+import { Book } from "../Book";
 
 
-function BookstList({selectedCategories}: {selectedCategories: string[] }) {
+function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
     const [books, setBooks] = useState<Book[]>([]);
     const [pageSize, setPageSize] = useState<number>(10);
     const [pageNum, setPageNum] = useState<number>(1);
@@ -14,10 +14,10 @@ function BookstList({selectedCategories}: {selectedCategories: string[] }) {
     useEffect(() => {
         const fetchBooks = async () => {
             const categoryParams = selectedCategories
-            .map((cat: string | number | boolean) => `projectTypes=${encodeURIComponent(cat)}`)
-            .join('&');
+                .map((cat: string | number | boolean) => `projectTypes=${encodeURIComponent(cat)}`)
+                .join('&');
             // this is where it is getting the data from
-            const response = await fetch(`http://localhost:4000/api/Books/AllBooks?pageHowMany=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : '' }`);
+            const response = await fetch(`http://localhost:4000/api/Books/AllBooks?pageHowMany=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`);
             //this variable holds the data
             const data = await response.json();
             //sets the project with the updated data
@@ -51,15 +51,15 @@ function BookstList({selectedCategories}: {selectedCategories: string[] }) {
             ))}
 
             <button disabled={pageNum === 1} onClick={() => setPageNum(pageNum - 1)}>Previous</button>
-                
+
             {[...Array(totalPages)].map((_, i) => (
-                    <button key={i + 1} onClick={() => setPageNum(i + 1)} disabled = {pageNum === i + 1}>
-                        {i + 1}
-                    </button>
+                <button key={i + 1} onClick={() => setPageNum(i + 1)} disabled={pageNum === i + 1}>
+                    {i + 1}
+                </button>
             ))}
-            <button disabled={pageNum === totalPages} onClick={() => 
+            <button disabled={pageNum === totalPages} onClick={() =>
                 setPageNum(pageNum + 1)} >Next</button>
-            
+
             <button onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}>
                 Sort by Title ({sortOrder === "asc" ? "Ascending" : "Descending"})
             </button>
@@ -67,12 +67,12 @@ function BookstList({selectedCategories}: {selectedCategories: string[] }) {
 
             <label>
                 Results per page:
-                <select 
-                value={pageSize} 
-                onChange={(p) => {
-                    setPageSize(Number(p.target.value))
-                    setPageNum(1);
-                }}
+                <select
+                    value={pageSize}
+                    onChange={(p) => {
+                        setPageSize(Number(p.target.value))
+                        setPageNum(1);
+                    }}
                 >
                     <option value='5'>5</option>
                     <option value='10'>10</option>
