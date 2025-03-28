@@ -125,3 +125,4 @@
 /Users/chloecloud/Desktop/Mission11_Cloud/backend/Mission11_Cloud/obj/Debug/net8.0/Mission11_Cloud.pdb
 /Users/chloecloud/Desktop/Mission11_Cloud/backend/Mission11_Cloud/obj/Debug/net8.0/Mission11_Cloud.genruntimeconfig.cache
 /Users/chloecloud/Desktop/Mission11_Cloud/backend/Mission11_Cloud/obj/Debug/net8.0/ref/Mission11_Cloud.dll
+/Users/chloecloud/Desktop/Mission11_Cloud/backend/Mission11_Cloud/obj/Debug/net8.0/Mission11_Cloud.sourcelink.json
