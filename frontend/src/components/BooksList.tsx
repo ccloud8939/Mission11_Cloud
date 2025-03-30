@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Book } from "../Book";
-
+import { useNavigate } from "react-router-dom";
 
 function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
     const [books, setBooks] = useState<Book[]>([]);
@@ -9,7 +9,8 @@ function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [sortOrder, setSortOrder] = useState<string>("asc");
-
+    const navigate = useNavigate();
+    
     // useEffect only grabs the data when it is needed instead of constantly going back and grabbing it 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -45,7 +46,7 @@ function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
                             <li><strong>Book Number of Page:</strong> {b.pageCount}</li>
                             <li><strong>Book Price:</strong> {b.price}</li>
                         </ul>
-
+                        <button className="btn btn-success" onClick={() => navigate(`/CartPage/${b.title}`)}>Add to Cart</button>
                     </div>
                 </div>
             ))}
