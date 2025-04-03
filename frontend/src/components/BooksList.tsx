@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Book } from "../Book";
+import { Book } from "../types/Book";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
     const [books, setBooks] = useState<Book[]>([]);
@@ -10,6 +11,7 @@ function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
     const [totalPages, setTotalPages] = useState<number>(0);
     const [sortOrder, setSortOrder] = useState<string>("asc");
     const navigate = useNavigate();
+    const { addToCart } = useCart(); // Get addToCart function from context
     
     // useEffect only grabs the data when it is needed instead of constantly going back and grabbing it 
     useEffect(() => {
@@ -46,7 +48,21 @@ function BookstList({ selectedCategories }: { selectedCategories: string[] }) {
                             <li><strong>Book Number of Page:</strong> {b.pageCount}</li>
                             <li><strong>Book Price:</strong> {b.price}</li>
                         </ul>
-                        <button className="btn btn-success" onClick={() => navigate(`/CartPage/${b.title}`)}>Add to Cart</button>
+                        <button
+                            className="btn btn-success"
+                            onClick={() => {
+                                addToCart({
+                                    bookID: b.bookId, // Map bookId to bookID
+                                    title: b.title, 
+                                    author: b.author,
+                                    price: Number(b.price),
+                                    quantity: 1 // Default quantity
+                                }); // Add book to cart
+                                navigate("/CartPage"); // Navigate after adding
+                            }}
+                        >
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             ))}
