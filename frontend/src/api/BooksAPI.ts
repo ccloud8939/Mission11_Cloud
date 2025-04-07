@@ -5,7 +5,8 @@ interface FetchBooksResponse {
   totalNumBooks: number;
 }
 
-const API_URL = 'https://waterproject-hilton-backend.azurewebsites.net/Water';
+const API_URL = 'http://localhost:4000/api/Books';
+
 
 export const fetchBooks = async (
   pageSize: number,
@@ -18,7 +19,7 @@ export const fetchBooks = async (
       .join('&');
 
     const response = await fetch(
-      `${API_URL}/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`
+      `${API_URL}/AllBooks?pageHowMany=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`
     );
 
     if (!response.ok) {
